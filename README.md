@@ -1,22 +1,22 @@
-# M7\_AE3\_ABPRO - Ejercicio Grupal: Plataforma de Gestión Académica con Django ORM
+# M7\_AE3\_ABPRO - Ejercicio Grupal: Plataforma de Gestión Académica con Django ORM 📚
 
-[cite\_start]Este proyecto es la solución al ejercicio grupal M7\_AE3\_ABPRO, que consiste en el desarrollo del modelo de datos para una **Plataforma de Gestión Académica** utilizando el framework **Django**[cite: 6]. [cite\_start]El objetivo principal fue modelar las relaciones entre entidades como **Profesores**, **Cursos**, **Estudiantes**, e **Inscripciones**, aplicando las mejores prácticas de Django ORM[cite: 7].
+Este proyecto es la solución al ejercicio grupal **M7\_AE3\_ABPRO**, que consiste en el desarrollo del modelo de datos para una **Plataforma de Gestión Académica** utilizando el framework **Django**. El objetivo principal fue modelar las relaciones entre entidades como **Profesores**, **Cursos**, **Estudiantes**, e **Inscripciones**, aplicando las mejores prácticas de Django ORM.
 
-***Nota:*** Se ha incluido una imagen del Diagrama Entidad-Relación (ERD) de la actividad dentro de la carpeta **`media`**. Esto se realiza con el único fin de asegurar que la estructura del repositorio contemple la ruta de archivo necesaria para el campo **`Foto de perfil`** en el modelo **`Perfiles`**, evitando errores al inicializar la base de datos o ejecutar comandos en la *shell* de Django.
+***Nota Importante:*** Se ha incluido una imagen del Diagrama Entidad-Relación (ERD) de la actividad dentro de la carpeta **`media`**. Esto se realiza con el único fin de asegurar que la estructura del repositorio contemple la ruta de archivo necesaria para el campo **`Foto de perfil`** en el modelo **`Perfiles`**, evitando errores al inicializar la base de datos o ejecutar comandos en la *shell* de Django.
 
------
+---
 
 ## 📝 Contexto y Objetivos
 
-[cite\_start]La actividad se centra en el diseño e implementación de un sistema de gestión académica, exigiendo la definición de modelos de datos con los siguientes tipos de relaciones[cite: 8, 14]:
+La actividad se centra en el diseño e implementación de un sistema de gestión académica, exigiendo la definición de modelos de datos con los siguientes tipos de relaciones:
 
-1.  **Relación Muchos a Uno (ForeignKey)**: Un **`Profesor`** puede impartir varios **`Cursos`**, pero un **`Curso`** pertenece a un solo **`Profesor`**. [cite\_start]Se debe incluir la regla de **borrado en cascada** (`on_delete=models.CASCADE`)[cite: 21, 22, 23].
-2.  **Relación Muchos a Muchos (ManyToManyField)**: Entre **`Estudiantes`** y **`Cursos`**. [cite\_start]Esta debe manejarse a través de una **entidad intermedia** explícita llamada **`Inscripciones`**[cite: 24, 25, 26, 27].
-3.  [cite\_start]**Relación Uno a Uno (OneToOneField)**: Cada **`Estudiante`** debe tener un **`Perfil`** asociado con información adicional[cite: 31, 32].
+1.  **Relación Muchos a Uno (ForeignKey)**: Un **`Profesor`** puede impartir varios **`Cursos`**, pero un **`Curso`** pertenece a un solo **`Profesor`**. Se debe incluir la regla de **borrado en cascada** (`on_delete=models.CASCADE`).
+2.  **Relación Muchos a Muchos (ManyToManyField)**: Entre **`Estudiantes`** y **`Cursos`**. Esta debe manejarse a través de una **entidad intermedia** explícita llamada **`Inscripciones`**.
+3.  **Relación Uno a Uno (OneToOneField)**: Cada **`Estudiante`** debe tener un **`Perfil`** asociado con información adicional.
 
-[cite\_start]El desarrollo se realizó en una aplicación de Django llamada **`academico`**[cite: 39].
+El desarrollo se realizó en una aplicación de Django llamada **`academico`**.
 
------
+---
 
 ## 🧱 Modelos de Datos Implementados
 
@@ -25,16 +25,16 @@ Los siguientes modelos fueron definidos en `models.py` para la aplicación **`ac
 | Modelo | Descripción | Relación | Atributos clave de relación |
 | :--- | :--- | :--- | :--- |
 | **`Profesores`** | Representa al docente. | **1:N con Cursos** | - |
-| **`Cursos`** | Representa la materia impartida. | **N:1 con Profesores** | [cite\_start]`profesor` (`ForeignKey` con `on_delete=CASCADE`)[cite: 22, 23]. |
+| **`Cursos`** | Representa la materia impartida. | **N:1 con Profesores** | `profesor` (`ForeignKey` con `on_delete=CASCADE`). |
 | **`Estudiantes`** | Representa al alumno. | **N:M con Cursos** | - |
-| **`Inscripciones`** | Entidad intermedia para N:M. | **N:M** (a través de `ForeignKey` a `Estudiantes` y `Cursos`) | [cite\_start]`estudiante`, `curso`, `fecha_inscripcion`, `estado`, `nota_final` (opcional)[cite: 27, 28, 29, 30]. |
-| **`Perfiles`** | Información adicional del estudiante. | **1:1 con Estudiantes** | [cite\_start]`estudiante` (`OneToOneField`), `biografia`, `foto`, `redes`[cite: 32, 33, 34, 35]. |
+| **`Inscripciones`** | Entidad intermedia para N:M. | **N:M** (a través de `ForeignKey` a `Estudiantes` y `Cursos`) | `estudiante`, `curso`, `fecha_inscripcion`, `estado`, `nota_final` (opcional). |
+| **`Perfiles`** | Información adicional del estudiante. | **1:1 con Estudiantes** | `estudiante` (`OneToOneField`), `biografia`, `foto`, `redes`. |
 
------
+---
 
-## 💻 Validación con la Shell de Django
+## 🖥️ Validación con la Shell de Django
 
-[cite\_start]Las siguientes *queries* fueron utilizadas en la *shell* de Django para validar la creación de instancias, la correcta asignación de relaciones y el funcionamiento del borrado en cascada, cumpliendo con el **Punto 4** de las instrucciones[cite: 42, 43].
+El siguiente script fue utilizado en la *shell* de Django para validar la creación de instancias, la correcta asignación de relaciones y el funcionamiento del borrado en cascada.
 
 ### Forma de utilizar la Shell de Django
 
@@ -51,7 +51,7 @@ Los siguientes modelos fueron definidos en `models.py` para la aplicación **`ac
 
 ### Script de Validación de Queries
 
-[cite\_start]Este script valida la creación de registros, las relaciones (1:N, N:M y 1:1), la actualización de campos en la tabla intermedia (`Inscripciones`), y comprueba el borrado en cascada (`p1.delete()`)[cite: 98, 99, 100, 101].
+Este script cumple con la creación de profesores, cursos, estudiantes, perfiles e inscripciones, la modificación de estados y notas, y la comprobación del borrado en cascada.
 
 ```python
 from academico.models import Profesores, Cursos, Estudiantes, Perfiles, Inscripciones
@@ -162,7 +162,6 @@ i7 = Inscripciones.objects.create(
 )
 
 # 3. MODIFICAR ESTADOS DE INSCRIPCIONES Y AGREGAR NOTAS FINALES
-# Se comprueba que se pueden actualizar los campos de la tabla intermedia (Inscripciones)
 
 i1.estado = "finalizado"
 i1.nota_final = 6.5
@@ -184,36 +183,32 @@ i7.save()
 pe1 = Perfiles.objects.create(
     estudiante=e1,
     biografia="Estudiante apasionado por el desarrollo backend",
-    redes="https://github.com/pedrolopez"
+    redes="[https://github.com/pedrolopez](https://github.com/pedrolopez)"
 )
 
 pe2 = Perfiles.objects.create(
     estudiante=e2,
     biografia="Entusiasta del desarrollo full-stack",
-    redes="https://linkedin.com/in/anamartinez"
+    redes="[https://linkedin.com/in/anamartinez](https://linkedin.com/in/anamartinez)"
 )
 
 pe3 = Perfiles.objects.create(
     estudiante=e3,
     biografia="Aprendiendo desarrollo web desde cero",
-    redes="https://github.com/carlosramirez"
+    redes="[https://github.com/carlosramirez](https://github.com/carlosramirez)"
 )
 
 # 5. COMPROBAR QUE EL BORRADO EN CASCADA FUNCIONA
 
-# Al eliminar a p1 (Juan Pérez), se deben eliminar automáticamente c1, c2, y c3 
-# (y las inscripciones i1, i3, i4, i6, i7 asociadas a esos cursos).
-print(f"Cursos antes de borrar a p1: {Cursos.objects.all().count()}") # Debería ser 5
+print(f"Cursos antes de borrar a p1: {Cursos.objects.all().count()}") 
 p1.delete()
-print(f"Cursos después de borrar a p1: {Cursos.objects.all().count()}") # Debería ser 2 (c4, c5)
-print(f"Inscripciones después de borrar a p1: {Inscripciones.objects.all().count()}") # Debería ser 2 (i2, i5, asociadas a c4 y c5)
+print(f"Cursos después de borrar a p1: {Cursos.objects.all().count()}") 
+print(f"Inscripciones después de borrar a p1: {Inscripciones.objects.all().count()}") 
 
-# Al eliminar a e3 (Carlos Ramírez), se debe eliminar automáticamente su perfil (pe3) 
-# y sus inscripciones asociadas (i6, i7).
-print(f"Perfiles antes de borrar a e3: {Perfiles.objects.all().count()}") # Debería ser 2 (pe1, pe2)
+print(f"Perfiles antes de borrar a e3: {Perfiles.objects.all().count()}")
 e3.delete()
-print(f"Perfiles después de borrar a e3: {Perfiles.objects.all().count()}") # Debería ser 2
-```
+print(f"Perfiles después de borrar a e3: {Perfiles.objects.all().count()}")
+````
 
 -----
 
@@ -221,9 +216,9 @@ print(f"Perfiles después de borrar a e3: {Perfiles.objects.all().count()}") # D
 
 | Nombre | GitHub Handle |
 | :--- | :--- |
-| Cecilia Ramos | `@cecyramos` |
-| Cristian Aranda | `@carandab` |
-| Nathalia Rojas | `@Nathalia-Rojas` |
+| **Cecilia Ramos** | `@cecyramos` |
+| **Cristian Aranda** | `@carandab` |
+| **Nathalia Rojas** | `@Nathalia-Rojas` |
 
 -----
 
@@ -231,3 +226,6 @@ print(f"Perfiles después de borrar a e3: {Perfiles.objects.all().count()}") # D
 
 El código completo del proyecto se encuentra disponible en:
 [https://github.com/carandab/M7\_AE3\_Grupal](https://github.com/carandab/M7_AE3_Grupal)
+
+```
+```
